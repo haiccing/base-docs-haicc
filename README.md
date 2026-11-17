@@ -52,9 +52,19 @@ docs mrepo: `haicc docs info/get <keywords>`.
   folder, `external/` for a protocol's actions, `internal/` for code.
 - **family**: packages that follow one package specification: `base`.
 - **position**: where a command stands; a URI names it.
+- **kind**: what a node's document says it is, the type of its data
+  structure: `{"kind":"swarm"}`. What a position means, its documents
+  say, not a path; later a kind is a schema's name.
+- **sources**: the folder an install deploys from. Air-gapped: nothing
+  is installed from the internet directly; a download only fills the
+  sources folder.
 - **shortcut**: a node in `main` leading to another mrepo; `haicc` hops
   through it.
+- **hook**: a command an mrepo runs on a status transition: its runtime
+  starting, its service's `initialise`, `start`, `stop`, `shutdown`.
 - **continuation**: a script a command answers with, to go on with.
+- **docs mrepo**: the install's documentation, every package's pages,
+  read with `info/get`; any other mrepo answers about itself.
 - **HDLC**: the haicc delivery lifecycle, how work is done.
 - **haici**: human ai continuous improvement, findings from the request
   log, fed back to the HDLC.
