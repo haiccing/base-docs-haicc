@@ -30,9 +30,51 @@ docs mrepo: `haicc docs info/get <keywords>`.
   it. `haicc host <protocol>/<action>`.
 - **A swarm and its nodes**: a node is an mrepo at
   `swarms/<swarm>/<name>` in the host, `<swarm>/<name>`; it can have a
-  replica in a container, linked as `container`.
-- **Splectral**: an mrepo beside the host, showing an install in a
-  browser.
+  replica in a container, linked as `container`; or it runs in a
+  container on its own haicc install, a pair (`boot/deploy ...
+  --flags container`).
+- **Splectral**, `local/splectral`: an app platform beside the host. It
+  deploys its components with the boot protocol, installs their
+  Splectral side (`splectral/install`) and serves their pages in a
+  browser; its server is the data layer, running the commands a
+  component asks for as a terminal does. Its components are packages of
+  the `splectral` organisation; the first is the info viewer.
+
+## Platforms
+
+haicc is the base; on it, three platforms, one for each type of
+component: `myctral` (data), `myctrans` (transformation) and `splectral`
+(interaction). Each is an app platform with its packages in an
+organisation of its own, beside haicc's own, `haiccing`.
+
+- **The platform itself is haiccing's**: the mrepo that deploys its
+  components and its server (`base-package-splectral`); its components'
+  packages are its organisation's, and name no other organisation's.
+- **An organisation is built, released and sourced by itself**: its
+  packages in the sources under `<org>/`, its manifest
+  `<org>/manifest.json`. An install sources `haiccing` and the
+  organisation of each platform it deploys.
+- **A package is named fully qualified**, `<org>/<package>`, always:
+  in a command, a list, a manifest. No organisation is assumed, so
+  packages of other organisations, a user's later, are named the same
+  way.
+- **References**: a list (a top-level inclusion) names its own
+  organisation's packages only; a package may depend on the
+  organisations its own declares (haiccing's for the three platforms),
+  written in the organisation's manifest (`depends`).
+- **A platform declares its organisation**: its package's
+  `package.json`, `"platform": "<org>"`; a list of that organisation is
+  its component.
+- **Sourcing, an organisation at a time**: `haicc sources download
+  <org>`, its manifest an asset of the latest release of its
+  documentation package (`<org>/base-docs-<platform>`, haiccing's
+  `base-docs-haicc`).
+- **One package template, an input source each**: a platform's packages
+  are brought to a template very similar to haiccing's
+  (`base-docs-package`); what differs is the input source, the
+  platform's own organisation.
+- **Built so far**: `splectral`, its proof of concept; `myctral` and
+  `myctrans` have their organisations, no packages yet.
 
 ## Terms
 
@@ -51,6 +93,9 @@ docs mrepo: `haicc docs info/get <keywords>`.
 - **module**: code, carried by packages; a documented method is a
   folder, `external/` for a protocol's actions, `internal/` for code.
 - **family**: packages that follow one package specification: `base`.
+- **organisation**: the packages of one platform, or haicc's own
+  (`haiccing`), built, released and sourced together: a GitHub
+  organisation, a folder in the sources, a manifest.
 - **position**: where a command stands; a URI names it.
 - **kind**: what a node's document says it is, the type of its data
   structure: `{"kind":"swarm"}`. What a position means, its documents
@@ -69,5 +114,14 @@ docs mrepo: `haicc docs info/get <keywords>`.
 - **docs mrepo**: the install's documentation, every package's pages,
   read with `info/get`; any other mrepo answers about itself.
 - **HDLC**: the haicc delivery lifecycle, how work is done.
+- **pair**: a node run in a Docker container on its own haicc install.
+  The host links it (`how: container`) and forwards every command for it
+  to it; a platform command acting on it (the boot protocol's) goes to
+  the container's platform, which executes it; the container's
+  lifecycle is the host's, through Docker.
+- **app platform**: an mrepo that deploys its components with the boot
+  protocol and adds only what is its own; a component deployed in two
+  parts, a plain mrepo first, the platform's side laid on it after.
+  Splectral is one.
 - **haici**: human ai continuous improvement, findings from the request
   log, fed back to the HDLC.
