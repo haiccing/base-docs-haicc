@@ -114,7 +114,8 @@ organisation of its own, beside haicc's own, `haiccing`.
   one protocol; offered once it is active.
 - **package**: the unit of delivery, a bundle run with Bare; it carries
   its own copies of what it needs.
-- **component**: a package that is a list of packages deployed together.
+- **component**: a package that is a list of packages deployed together,
+  standalone, as an mrepo of its own; a protocol of its own allowed.
 - **solution**: a package that is the mrepos an install is made of: its
   own mrepo's list, and its commission deploying its components below
   it; named by the segment it is deployed at (`workbench`). Not a kind
