@@ -1,6 +1,6 @@
 # Test report: haiccing/base-docs-haicc
 
-The package passed its `full` set: all 13 units, 113 of 113 tests and 754 of 754 asserts.
+The package passed its `full` set: all 13 units, 114 of 114 tests and 759 of 759 asserts.
 
 | | |
 |---|---|
@@ -8,11 +8,11 @@ The package passed its `full` set: all 13 units, 113 of 113 tests and 754 of 754
 | Set | `full` |
 | Result | passed |
 | Units | 13 of 13 passed |
-| Tests | 113 of 113 passed |
-| Asserts | 754 of 754 passed |
-| Run | 2026-11-26 11:05 UTC |
+| Tests | 114 of 114 passed |
+| Asserts | 759 of 759 passed |
+| Run | 2026-11-27 12:25 UTC |
 | Bare | v1.36.0 |
-| Content | `bb768ac9d11004103c496cd85da32f95142d5e44f213688b920abbef4052d4c0` |
+| Content | `dcd99920a473208a49a17e1be496490f9621acf0bcd36008483cc62d9d536622` |
 
 ## Units
 
@@ -23,13 +23,13 @@ The package passed its `full` set: all 13 units, 113 of 113 tests and 754 of 754
 | `/test/code` | passed | 1 of 1 | 2 of 2 |
 | `/test/mrepo` | passed | 1 of 1 | 1 of 1 |
 | `/test/package` | passed | 1 of 1 | 1 of 1 |
-| `/test/modules/pear-full-square/mrepo-base-info` | passed | 11 of 11 | 92 of 92 |
+| `/test/modules/pear-full-square/mrepo-base-info` | passed | 11 of 11 | 93 of 93 |
 | `/test/modules/pear-full-square/mycelium-container-document` | passed | 6 of 6 | 42 of 42 |
 | `/test/modules/pear-full-square/mycelium-uri` | passed | 22 of 22 | 217 of 217 |
 | `/test/modules/pear-full-square/mycelium-value-avro` | passed | 8 of 8 | 57 of 57 |
 | `/test/modules/pear-full-square/mycelium-value-json` | passed | 1 of 1 | 3 of 3 |
 | `/test/modules/pear-full-square/mycelium-xpath` | passed | 22 of 22 | 152 of 152 |
 | `/test/modules/pear-full-square/mycelium-xpath-physical` | passed | 12 of 12 | 91 of 91 |
-| `/test/modules/pear-full-square/pkgm-base-check` | passed | 27 of 27 | 94 of 94 |
+| `/test/modules/pear-full-square/pkgm-base-check` | passed | 28 of 28 | 98 of 98 |
 
 Written by the package's pre-release from `full.json`, beside it. The content is the hash of the bundle that was tested, its test reports left out.

@@ -107,7 +107,8 @@ organisation of its own, beside haicc's own, `haiccing`.
   a runtime executing the requests posted to its inbox.
 - **layer**: one branch of an mrepo, with a mode: `main` its data,
   `runtime`, `packages`, `protocols`, `links`, `info`,
-  the inbox, the outbox, the request layers.
+  the inbox, the outbox, the request layers; `avro`, its register of the
+  types it uses, a cache.
 - **request**: a form, `{ protocol, action, uri, args }`, or a command
   as typed; executed, recorded, answered through the outbox.
 - **protocol**: what an mrepo offers, a set of actions; one package,
@@ -160,7 +161,9 @@ organisation of its own, beside haicc's own, `haiccing`.
   (`base-docs-hdlc`, "Every action is idempotent").
 - **hook**: what an mrepo runs on a status transition, a file a
   transition of simple commands, its own lines: its runtime starting
-  (`boot`, the activations); `commission`, after its boot at every start
+  (`boot`, the activations; the boot mrepo's also deploys the schema
+  registry, a fixture, first; a line of it that fails stops the
+  runtime, nothing taken in); `commission`, after its boot at every start
   (a deploy, a restart), its lines idempotent; its
   service's `initialise` (its setup), `start`, `stop`, `shutdown`;
   `decommission`, at the start of its teardown.
