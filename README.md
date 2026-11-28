@@ -53,13 +53,13 @@ docs mrepo: `haicc docs info/get <keywords>`.
   testing environment, the local manager in the host's role. One
   command on a fresh install, `haicc . boot/deploy workbench
   haiccing/base-solution-workbench`, deploys it; its commission deploys
-  its components below it, the docs mrepo and Splectral
+  its components below it, the docs mrepo and SPLectral
   (`workbench/docs`, `workbench/splectral`), each commissioned by its
   own, then brings it into service. Its `main` holds the `howtos`
   namespace, where how-tos are installed by their key.
-- **Splectral**, `local/splectral`: an app platform beside the host. It
+- **SPLectral**, `local/splectral`: an app platform beside the host. It
   deploys its components with the boot protocol, installs their
-  Splectral side (`splectral/install`) and serves them in a browser as
+  SPLectral side (`splectral/install`) and serves them in a browser as
   a site, a tab each, a component's section in its content area; its server is the data layer, running the commands a
   component asks for as a terminal does. Its components are packages of
   the `splectral` organisation: the help viewer, the first, and the log
@@ -102,6 +102,12 @@ organisation of its own, beside haicc's own, `haiccing`.
   `myctrans` have their organisations, no packages yet.
 
 ## Terms
+
+- **Names, two forms** (the human, 2026-11-27: "Natural language
+  versions: HAICC, SPLectral, SPLectrum. System URI versions all
+  lowercase (commands included)"): in prose HAICC, SPLectral,
+  SPLectrum; as a URI, a command, a package or organisation name,
+  lowercase (`haicc`, `splectral`, `haicc . boot/deploy`).
 
 - **mrepo**: a repository that runs; its data in layers, git branches;
   a runtime executing the requests posted to its inbox.
@@ -199,7 +205,7 @@ organisation of its own, beside haicc's own, `haiccing`.
 - **app platform**: an mrepo that deploys its components with the boot
   protocol and adds only what is its own; a component deployed in two
   parts, a plain mrepo first, the platform's side laid on it after.
-  Splectral is one.
+  SPLectral is one.
 - **swarm**: haicc's node management on a host: a swarm, its master and
   its nodes made, each node registered; not a protocol the nodes run.
 - **master**: a swarm's first node: it keeps the swarm's lookup db; one a
