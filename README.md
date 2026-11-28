@@ -5,7 +5,7 @@ The haicc platform: what it is, its levels from the machine to the swarm, and ou
 haicc runs software as mrepos: repositories that run, their data in
 layers and a runtime executing the requests posted to them. On a
 machine, one command reaches an install of mrepos, local ones and
-swarms of nodes; each answers about itself. Packages make the mrepos,
+swarms of peers; each answers about itself. Packages make the mrepos,
 protocols are what they offer, and the documentation is read from the
 docs mrepo: `haicc docs info/get <keywords>`.
 
@@ -32,21 +32,21 @@ docs mrepo: `haicc docs info/get <keywords>`.
   every package in its store, built at its `initialise`, split on
   package, read with `info` in a package's context.
 - **The host**, `local/host`: the mrepo a machine is managed with,
-  service managed; applications, swarms and their nodes are deployed in
+  service managed; applications, swarms and their peers are deployed in
   it. `haicc host <protocol>/<action>`. On an install with the
   workbench, the workbench fulfils this role (below): the role counts,
   not the mrepo's name.
-- **A swarm and its nodes**: a swarm is made by the host
+- **A swarm and its peers**: a swarm is made by the host
   (`swarm/create swarms/<swarm>`): a node in its `main` whose kind is
-  `swarm`, with its master, the swarm's first node, and its lookup db.
-  Nodes are deployed into it (`swarm/deploy swarms/<swarm>/<name>`),
+  `swarm`, with its master, the swarm's first peer, and its lookup db.
+  Peers are deployed into it (`swarm/deploy swarms/<swarm>/<name>`),
   each an mrepo, `<swarm>/<name>`, registered by the host that created
-  it. Every node runs `rns` on the swarm's lookup db: `rns/status` says
-  who is registered and active. A node's log is its request log, as every mrepo's: read where it is
-  (`crud/read "done/*" --flags layer=request`). A node
+  it. Every peer runs `rns` on the swarm's lookup db: `rns/status` says
+  who is registered and active. A peer's log is its request log, as every mrepo's: read where it is
+  (`crud/read "done/*" --flags layer=request`). A peer
   reaches another by its unique URI, `haicc <swarm>/<name>
   <protocol>/<action>`: dispatched, resolved by `rns`, delivered to it
-  directly. A node can have a replica in a
+  directly. A peer can have a replica in a
   container, linked as `container`; or it runs in a container on its
   own haicc install, a pair (`boot/deploy ... --flags container`).
 - **The workbench**, `local/workbench`: a solution, the development and
@@ -103,6 +103,15 @@ organisation of its own, beside haicc's own, `haiccing`.
 
 ## Terms
 
+- **Node and peer** (the human, 2026-11-28: "change to peers"): a
+  node is a position in an mrepo's tree, a structure node with its
+  document, its values the leaves (XPath's word); a swarm's member is a
+  peer, an mrepo of its own; the word for it everywhere, the code and
+  the package names too ("have an agent replace it across the board,
+  parked included"). A swarm's members are of two kinds for the
+  moment, peer and master (the human, 2026-11-28: "peer and master as
+  the two swarm member type names for the moment"); an example child
+  mrepo is named the same way, `peer-1`.
 - **Names, two forms** (the human, 2026-11-27: "Natural language
   versions: HAICC, SPLectral, SPLectrum. System URI versions all
   lowercase (commands included)"): in prose HAICC, SPLectral,
@@ -135,11 +144,11 @@ organisation of its own, beside haicc's own, `haiccing`.
   organisation, a folder in the sources, a manifest.
 - **position**: where a command stands; a URI names it.
 - **unique URI**: an mrepo's name across the install, a path: its
-  namespace, then its name (`local/host`, `swarm-1/node-1`,
+  namespace, then its name (`local/host`, `swarm-1/peer-1`,
   `haiccing/base-package-crud/howto/query/boot`); its folder
   `<work>/mrepos/<unique URI>/`, the install's registry. Never a prefix of another's: no mrepo's
   folder inside another's. Unique with respect to its install: what is
-  in `local`, and a how-to's mrepos, only within it; a swarm's node
+  in `local`, and a how-to's mrepos, only within it; a swarm's peer
   (`<swarm>/<name>`) independent of the install it runs on. Beyond the
   install, in an external context, a domain segment in front makes it
   unique there (not built).
@@ -150,14 +159,34 @@ organisation of its own, beside haicc's own, `haiccing`.
 - **kind**: what a node's document says it is, the type of its data
   structure: `{"kind":"swarm"}`, `{"kind":"howtos"}`. What a position means, its documents
   say, not a path; later a kind is a schema's name.
-- **sources**: the folder an install deploys from. Air-gapped: nothing
-  is installed from the internet directly; a download only fills the
-  sources folder.
+- **sources**: the folders an install deploys from, in order: what the
+  platform, air-gapped, is given access to (the human, 2026-11-28: "the sources
+  folder becomes 'what is available to the platform to use', otherwise
+  there would be no visibility on the potential capabilities of the
+  platform"). Nothing is installed from the internet directly; a
+  download only fills a sources folder. Two kinds at the machine level
+  (the human, 2026-11-28: "separate the two kinds: external sources for
+  the 'boundary processes' and internal sources for the install"): the
+  internal sources, the folders the install reads (`sources.list`,
+  `folder:<path>`); the external sources, the boundary's
+  (`external.list`, `github:<org>`), never read inside: as built, a
+  record of where each download came from; nothing reads it to act on
+  it yet (the download's safeguards will).
+  The install's fixtures are built from the sources, not from what is
+  deployed at a moment: the schema registry holds every type their
+  packages declare, the docs mrepo documents every package in them
+  ("Same applies to docs"). Not built
+  yet: both read the store today.
 - **shortcut**: a node in `main` leading to another mrepo; `haicc` hops
   through it.
-- **link**: what an mrepo knows of one it deployed: its shortcut in
-  `main` and its record in the `links` layer (where it is, its package,
-  its runtime). The managing mrepo's, in forward visibility only.
+- **link**: what an mrepo knows of another mrepo, in a layer of its own.
+  Of one it deployed: its shortcut in `main` and its record in the
+  `links` layer (where it is, its package, its runtime), the managing
+  mrepo's, in forward visibility only. In other layers than `main` too
+  (the human, 2026-11-28: "we expanded the link concept to other layers
+  than just main"): the schema registry linked into every mrepo's
+  `avro` layer, for its own processing (`base-docs-vision`, "Type
+  system").
 - **registry**: the install's mrepos, the work folder's `mrepos/`, a
   folder each by its unique URI; for the install's system
   administration. Made at the initial boot, kept by deploy and
@@ -197,7 +226,7 @@ organisation of its own, beside haicc's own, `haiccing`.
   are its own. A short keyword: the mrepo's own package's, else a choice
   of the packages that have it. Never kept between requests.
 - **HDLC**: the haicc delivery lifecycle, how work is done.
-- **pair**: a node run in a Docker container on its own haicc install.
+- **pair**: a peer run in a Docker container on its own haicc install.
   The host links it (`how: container`) and forwards every command for it
   to it; a platform command acting on it (the boot protocol's) goes to
   the container's platform, which executes it; the container's
@@ -206,22 +235,22 @@ organisation of its own, beside haicc's own, `haiccing`.
   protocol and adds only what is its own; a component deployed in two
   parts, a plain mrepo first, the platform's side laid on it after.
   SPLectral is one.
-- **swarm**: haicc's node management on a host: a swarm, its master and
-  its nodes made, each node registered; not a protocol the nodes run.
-- **master**: a swarm's first node: it keeps the swarm's lookup db; one a
+- **swarm**: haicc's peer management on a host: a swarm, its master and
+  its peers made, each peer registered; not a protocol the peers run.
+- **master**: a swarm's first peer: it keeps the swarm's lookup db; one a
   swarm.
-- **lookup db**: a swarm's registry, common to its nodes: each node's
+- **lookup db**: a swarm's registry, common to its peers: each peer's
   unique URI, where it lives, whether it is active; kept at the master,
-  a replica on every node, read with `rns`.
-- **lease**: how long a node stays active without its `rns` renewing it
-  at the master; run out, the node is quiet.
-- **cell**: a node as a self-contained unit: its own haicc, its own
+  a replica on every peer, read with `rns`.
+- **lease**: how long a peer stays active without its `rns` renewing it
+  at the master; run out, the peer is quiet.
+- **cell**: a peer as a self-contained unit: its own haicc, its own
   `rns`, its own `dispatch`, its own identity, its own log.
-- **dispatch**: a command routed to the node its unique URI names, not
+- **dispatch**: a command routed to the peer its unique URI names, not
   through shortcuts: resolved in the sender's lookup db, on one machine
-  dropped into the node's inbox folder.
-- **log**: a node's completed requests, a record each, in a topic the
-  node alone writes; a swarm's are read together at its master.
+  dropped into the peer's inbox folder.
+- **log**: a peer's completed requests, a record each, in a topic the
+  peer alone writes; a swarm's are read together at its master.
 - **realm** (a request realm): a set of an mrepo's layers through which
   requests of one kind arrive and are answered, with its own consumer:
   an inbox and an outbox, topics. The mrepo's own (`inbox`,
